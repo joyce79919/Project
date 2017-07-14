@@ -1,24 +1,47 @@
-# generage a raster path to build the cubit button
+# generate a raster path to build the cube button
+# diameter of laser and speed of its are user inputs 
 
 from math import *
 import numpy as np
-import turtle
 
-length_substrate = 2 #unit:m
-length_deposition = 0.06985 # unit: m
 
-x_0 = length_substrate/2 - length_deposition/2
-y_0 = length_substrate/2 - length_deposition/2
+#################
+## User Inputs ##
+#################
 
-def go(step, heading):
-     turtle.setheading(heading)
-     turtle.forward(step)
-  
-def go_down(step):
-     go(step, 270)
-def go_up(step):
-     go(step, 90)
-def go_right(step):
-     go(step, 0) 
-def go_left(step):
-     go(step, 180)
+laser_diameter = e-3 # unit: m
+laser_speed = 0.01 # unit : m/s
+
+##################
+### Fixed Data ###
+##################
+
+substrate_length = 0.2 # unit: m
+cube_length = 0.06985 # unit: m
+
+###############
+#### Codes ####
+###############
+
+x_0 = substrate_length/2 - cube_length/2
+y_0 = substrate_length/2 - cube_length/2
+z_0 = 0
+t = 0
+
+def get_increment(laser_diameter, cube_length):
+	increment=0
+	if (cube_length/laser_diameter <= 0.9 * laser_diameter):
+	
+	return increment
+
+def get_path(laser_diameter, cube_length, increment, layer, laser_speed):
+	path = []
+	for z in range(layer):
+		t = t + increment/laserr_speed #second
+		path.append([t,x,y.z])
+
+
+
+
+print(np.shape(path))
+np.savetxt('path.txt',path)
