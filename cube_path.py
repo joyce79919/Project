@@ -23,19 +23,28 @@ cube_length = 0.06985 # unit: m
 #### Codes ####
 ###############
 
-x_0 = substrate_length/2 - cube_length/2
-y_0 = substrate_length/2 - cube_length/2
-z_0 = 0
+x = substrate_length/2 - cube_length/2
+y = substrate_length/2 - cube_length/2
+z = 0
 t = 0
 
 
-def get_path(laser_diameter, cube_length, laser_speed,t):
+def get_path(laser_diameter, cube_length, laser_speed,t,x,y,z):
 	path = []
-	increment = cube_length/(laser_diameter*1.2)
-	layer = cube_length/increment
+	x_increment = cube_length/(laser_diameter*1.2)
+	y_increment = cube_length/(laser_diameter*1.2)
+	layer = cube_length/x_increment # number of times laser needs to go upwards
 
-	for z in range(layer):
+	for i in range(total_number_steps):
 		t = t + increment/laser_speed # unit: second
+		while x < = cube_length:
+			x = x + x_increment
+			y = y
+			z = z
+			t = t + increment/laser_speed # unit: second	
+		y = y + y_increment
+		t = t + increment/laser_speed # unit: second		
+		y_increment = (-1) * y_increment
 		path.append([t,x,y.z])
 
 #print(np.shape(path))
