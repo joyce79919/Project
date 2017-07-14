@@ -9,8 +9,8 @@ import numpy as np
 ## User Inputs ##
 #################
 
-laser_diameter = e-3 # unit: m
-laser_speed = 0.01 # unit : m/s
+laser_diameter = 2.5e-3 # unit: m
+laser_speed = 0.01 # unit: m/s
 
 ##################
 ### Fixed Data ###
@@ -28,20 +28,15 @@ y_0 = substrate_length/2 - cube_length/2
 z_0 = 0
 t = 0
 
-def get_increment(laser_diameter, cube_length):
-	increment=0
-	if (cube_length/laser_diameter <= 0.9 * laser_diameter):
-	
-	return increment
 
-def get_path(laser_diameter, cube_length, increment, layer, laser_speed):
+def get_path(laser_diameter, cube_length, laser_speed,t):
 	path = []
+	increment = cube_length/(laser_diameter*1.2)
+	layer = cube_length/increment
+
 	for z in range(layer):
-		t = t + increment/laserr_speed #second
+		t = t + increment/laser_speed # unit: second
 		path.append([t,x,y.z])
 
-
-
-
-print(np.shape(path))
+#print(np.shape(path))
 np.savetxt('path.txt',path)
