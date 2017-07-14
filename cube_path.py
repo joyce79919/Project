@@ -43,6 +43,18 @@ def x_path(cube_length, laser_speed, x, y, z, t):
 		x_path.append([t,x,y,z])
 	return x_path
 
+def x_path_back(cube_length, laser_speed, x, y, z, t):
+	x_inc = get_increment()
+	x_path = []
+	while x < = cube_length:
+		x = x - x_inc
+		y = y
+		z = z
+		t = t + x_inc / laser_speed
+		x_path.append([t,x,y,z])
+	return x_path
+
+
 def y_path(laser_speed, x, y, z, t):
 	y_inc = get_increment()
 	y_path = []
@@ -53,6 +65,18 @@ def y_path(laser_speed, x, y, z, t):
 	y_inc = (-1) * y_inc
 	y_path.append([t,x,y,z])
 	return y_path
+
+def y_path_back(laser_speed, x, y, z, t):
+	y_inc = get_increment()
+	y_path = []
+	x = x
+	y = y - y_inc
+	t = t + y_inc / laser_speed
+	z = z
+	y_inc = (-1) * y_inc
+	y_path.append([t,x,y,z])
+	return y_path
+
 
 def z_path(laser_speed, x, y, z, t):
 	z_inc = get_increment()
@@ -72,7 +96,11 @@ def get_path(laser_diameter, cube_length, laser_speed,t,x,y,z):
 		while (y + inc) < = cube_length:
 			path = np.concatenate((path,x_path()))
 			path = np.concatenate((path,y_path()))
-		z_path()
+		path = np.concatenate((path,z_path()))
+		while (cube_length - inc) > = 0:
+			path = np.concatenate((path,x_path_back()))
+			path = np.concatenate((path,y_path_back()))
+		path = np.concatenate((path,z_path()))
 		#path.append([t,x,y.z])
 
 #print(np.shape(path))
