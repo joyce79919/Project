@@ -4,7 +4,7 @@
 from math import *
 import numpy as np
 
-
+#global laser_diameter laser_speed substrate_length cube_length x y z t
 #################
 ## User Inputs ##
 #################
@@ -87,34 +87,25 @@ def z_path(laser_speed, x, y, z, t):
 	return z_path
 
 def get_path(laser_diameter, cube_length, laser_speed,t,x,y,z):
-
-	for i in range(layer):
-		inc = get_increment()
-		while (y + inc) <= cube_length:
-			path = np.concatenate((path,x_path()))
-			path = np.concatenate((path,y_path()))
-		path = np.concatenate((path,z_path()))
-		while (cube_length - inc) >= 0:
-			path = np.concatenate((path,x_path_back()))
-			path = np.concatenate((path,y_path_back()))
-		path = np.concatenate((path,z_path()))
-		#path.append([t,x,y.z])
+	inc = get_increment(cube_length, laser_diameter)
+	while (y + inc) <= cube_length:
+		path = np.concatenate((path,x_path(cube_length, laser_speed, x, y, z, t)))
+		path = np.concatenate((path,y_path(laser_speed, x, y, z, t)))
+	path = np.concatenate((path,z_path(laser_speed, x, y, z, t)))
+	while (cube_length - inc) >= 0:
+		path = np.concatenate((path,x_path_back(cube_length, laser_speed, x, y, z, t)))
+		path = np.concatenate((path,y_path_back(laser_speed, x, y, z, t)))
+	path = np.concatenate((path,z_path(laser_speed, x, y, z, t)))
+	#path.append([t,x,y.z])
 	return path
 
 path = []
 a = get_increment(cube_length, laser_diameter)
 layer = cube_length/a # number of times laser needs to go upwards
-
-for i in range(layer):
-	inc = get_increment()
-	while (y + inc) <= cube_length:
-		path = np.concatenate((path,x_path()))
-		path = np.concatenate((path,y_path()))
-	path = np.concatenate((path,z_path()))
-	while (cube_length - inc) >= 0:
-		path = np.concatenate((path,x_path_back()))
-		path = np.concatenate((path,y_path_back()))
-	path = np.concatenate((path,z_path()))
+counter = 0;
+if counter <= cube_length:
+	get_path(laser_diameter, cube_length, laser_speed,t,x,y,z)
+	counter = counter + layer
 
 print(np.shape(path))
 #np.savetxt('path.txt',path)
